@@ -1,7 +1,4 @@
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 class Cat {
     private String name;
@@ -42,6 +39,82 @@ class Cat {
     }
 }
 
+class MyStack{
+    private int maxSize;
+    private int top;
+    private int[] stack;
+
+    public MyStack(int size){
+        maxSize = size;
+        stack = new int[maxSize];
+        top = -1;
+    }
+    public void push(int element){
+        stack[++top] = element;
+    }
+
+    public int pop(){
+        return stack[top--];
+    }
+
+    public int peek(){
+        return stack[top];
+    }
+
+    public boolean isEmpty(){
+        return top == -1;
+    }
+
+    public boolean isFull(){
+        return top == maxSize;
+    }
+}
+
+class MyQueue{
+    private int[] queue;
+    private int maxSize;
+    private int front;
+    private int rear;
+    private int items;
+
+    public MyQueue(int size){
+        maxSize = size;
+        queue = new int[maxSize];
+        front = 0;
+        rear = -1;
+        items = 0;
+    }
+
+    public void push(int element){
+        if (rear == maxSize - 1) {
+            rear = -1;
+        }
+        queue[++rear] = element;
+        items++;
+    }
+
+    public int pop(){
+        int temp = queue[front++];
+        if (front == maxSize){
+            front = 0;
+        }
+        items--;
+        return temp;
+    }
+
+    public int peek(){
+        return queue[front];
+    }
+
+    public boolean isEmpty(){
+        return items == 0;
+    }
+
+    public boolean isFull(){
+        return items == maxSize;
+    }
+}
+
 public class MainClass {
 
     static long t1;
@@ -50,14 +123,11 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-        //region4.1
-        System.out.println("------------------4.1------------------------");
         Cat cat1 = new Cat("Barsik", "White");
         Cat cat2 = new Cat("Murzik", "Black");
         Cat cat3 = new Cat("Boris", "Grey");
         Cat cat4 = new Cat("Vasiliy", "Red");
         Cat cat5 = new Cat("Masha", "Pointed");
-
 
         LinkedList<Cat> cats = new LinkedList<>();
         cats.add(cat1);
@@ -65,20 +135,17 @@ public class MainClass {
         cats.add(cat3);
         cats.add(cat4);
 
-        Stack<Cat> stCats = new Stack<>();
+        //region4.1
+        System.out.println("------------------4.1------------------------");
+        MyStack myStack = new MyStack(5);
 
-        t1 = System.nanoTime();
-        stCats.addAll(cats);
-        t2 = System.nanoTime();
-        dt = t2 - t1;
-        System.out.printf("Time to addAll: %.2f\n\n", (float) dt);
-
-
-
+        for(int i = 0; i < 5; i++){
+            myStack.push(i);
+        }
 
         System.out.print("Pop: ");
         t1 = System.nanoTime();
-        stCats.pop();
+        myStack.pop();
         t2 = System.nanoTime();
         dt = t2 - t1;
         System.out.printf("Time to pop: %.2f\n\n", (float) dt);
@@ -86,74 +153,52 @@ public class MainClass {
 
         System.out.print("Peek: ");
         t1 = System.nanoTime();
-        stCats.peek();
+        myStack.peek();
         t2 = System.nanoTime();
         dt = t2 - t1;
-        stCats.peek().getInfo();
         System.out.printf("Time to peek: %.2f\n\n", (float) dt);
 
         System.out.print("Push: ");
         t1 = System.nanoTime();
-        stCats.push(cat5);
+        myStack.push(5);
         t2 = System.nanoTime();
         dt = t2 - t1;
-        stCats.peek().getInfo();
         System.out.printf("Time to push: %.2f\n\n", (float) dt);
 
-        int search;
-        t1 = System.nanoTime();
-        search = stCats.search(cat2);
-        t2 = System.nanoTime();
-        dt = t2 - t1;
-        System.out.println(cat2.getName() + " index: " + search);
-        System.out.printf("Time to search: %.2f\n\n", (float) dt);
-
-        System.out.println("Stack is Empty? " + stCats.empty());
         //endregion
-
         //region 4.2
         System.out.println("------------------4.2------------------------");
 
-        Queue<Cat> qCats = new LinkedList<>();
+        MyQueue myQueue = new MyQueue(5);
 
+        for(int i = 0; i < 5; i++){
+            myQueue.push(i);
+        }
 
+        System.out.print("Pop: ");
         t1 = System.nanoTime();
-        qCats.add(cat1);
+        myQueue.pop();
         t2 = System.nanoTime();
         dt = t2 - t1;
-        System.out.printf("Time to add: %.2f\n\n", (float) dt);
+        System.out.printf("Time to pop: %.2f\n\n", (float) dt);
 
-        qCats.add(cat2);
-        qCats.add(cat3);
-        qCats.add(cat4);
 
+        System.out.print("Peek: ");
         t1 = System.nanoTime();
-        qCats.remove();
-        t2 = System.nanoTime();
-        dt = t2 - t1;
-        System.out.printf("Time to remove: %.2f\n\n", (float) dt);
-
-        t1 = System.nanoTime();
-        qCats.peek();
+        myQueue.peek();
         t2 = System.nanoTime();
         dt = t2 - t1;
         System.out.printf("Time to peek: %.2f\n\n", (float) dt);
 
+        System.out.print("Push: ");
         t1 = System.nanoTime();
-        qCats.offer(cat5);
+        myQueue.push(5);
         t2 = System.nanoTime();
         dt = t2 - t1;
-        System.out.printf("Time to offer: %.2f\n\n", (float) dt);
+        System.out.printf("Time to push: %.2f\n\n", (float) dt);
 
-        t1 = System.nanoTime();
-        qCats.poll();
-        t2 = System.nanoTime();
-        dt = t2 - t1;
-        System.out.printf("Time to poll: %.2f\n\n", (float) dt);
 
-        while (!qCats.isEmpty()){
-            System.out.println(qCats.poll().getName());
-        }
+
         //endregion
 
         //region 4.3
@@ -192,10 +237,120 @@ public class MainClass {
         //region 4.4
         System.out.println("------------------4.4------------------------");
 
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+
+        t1 = System.nanoTime();
+        priorityQueue.add(4);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to add: %.2f\n\n", (float) dt);
+        priorityQueue.add(3);
+        priorityQueue.add(0);
+        priorityQueue.add(2);
+
+        t1 = System.nanoTime();
+        priorityQueue.remove();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to remove: %.2f\n\n", (float) dt);
+
+        int a;
+        t1 = System.nanoTime();
+        a = priorityQueue.peek();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to peek: %.2f\n\n", (float) dt);
+
+        while (!priorityQueue.isEmpty()){
+            System.out.println(priorityQueue.remove());
+        }
         //endregion
 
         //region 4.5
         System.out.println("------------------4.5------------------------");
+        System.out.println("***STACK***");
+        Stack<Cat> stCats = new Stack<>();
+
+        t1 = System.nanoTime();
+        stCats.addAll(cats);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to addAll: %.2f\n\n", (float) dt);
+
+        System.out.print("Pop: ");
+        t1 = System.nanoTime();
+        stCats.pop();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to pop: %.2f\n\n", (float) dt);
+
+
+        System.out.print("Peek: ");
+        t1 = System.nanoTime();
+        stCats.peek();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        stCats.peek().getInfo();
+        System.out.printf("Time to peek: %.2f\n\n", (float) dt);
+
+        System.out.print("Push: ");
+        t1 = System.nanoTime();
+        stCats.push(cat5);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        stCats.peek().getInfo();
+        System.out.printf("Time to push: %.2f\n\n", (float) dt);
+
+        int search;
+        t1 = System.nanoTime();
+        search = stCats.search(cat2);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.println(cat2.getName() + " index: " + search);
+        System.out.printf("Time to search: %.2f\n\n", (float) dt);
+
+        System.out.println("Stack is Empty? " + stCats.empty());
+
+        System.out.println("\n***QUEUE***");
+        Queue<Cat> qCats = new LinkedList<>();
+
+        t1 = System.nanoTime();
+        qCats.add(cat1);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to add: %.2f\n\n", (float) dt);
+
+        qCats.add(cat2);
+        qCats.add(cat3);
+        qCats.add(cat4);
+
+        t1 = System.nanoTime();
+        qCats.remove();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to remove: %.2f\n\n", (float) dt);
+
+        t1 = System.nanoTime();
+        qCats.peek();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to peek: %.2f\n\n", (float) dt);
+
+        t1 = System.nanoTime();
+        qCats.offer(cat5);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to offer: %.2f\n\n", (float) dt);
+
+        t1 = System.nanoTime();
+        qCats.poll();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to poll: %.2f\n\n", (float) dt);
+
+        while (!qCats.isEmpty()){
+            System.out.println(qCats.poll().getName());
+        }
 
         //endregion
     }
