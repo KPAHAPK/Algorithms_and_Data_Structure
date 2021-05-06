@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 class Cat {
@@ -42,6 +43,10 @@ class Cat {
 
 public class MainClass {
 
+    static long t1;
+    static long t2;
+    static long dt;
+
     public static void main(String[] args) {
 
         //region4.1
@@ -61,10 +66,10 @@ public class MainClass {
 
         Stack<Cat> stCats = new Stack<>();
 
-        long t1 = System.nanoTime();
+        t1 = System.nanoTime();
         stCats.addAll(cats);
-        long t2 = System.nanoTime();
-        long dt = t2 - t1;
+        t2 = System.nanoTime();
+        dt = t2 - t1;
         System.out.printf("Time to addAll: %.2f\n\n", (float) dt);
 
 
@@ -108,6 +113,46 @@ public class MainClass {
         //region 4.2
         System.out.println("------------------4.2------------------------");
 
+        Queue<Cat> qCats = new LinkedList<>();
+
+
+        t1 = System.nanoTime();
+        qCats.add(cat1);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to add: %.2f\n\n", (float) dt);
+
+        qCats.add(cat2);
+        qCats.add(cat3);
+        qCats.add(cat4);
+
+        t1 = System.nanoTime();
+        qCats.remove();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to remove: %.2f\n\n", (float) dt);
+
+        t1 = System.nanoTime();
+        qCats.peek();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to peek: %.2f\n\n", (float) dt);
+
+        t1 = System.nanoTime();
+        qCats.offer(cat5);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to offer: %.2f\n\n", (float) dt);
+
+        t1 = System.nanoTime();
+        qCats.poll();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to poll: %.2f\n\n", (float) dt);
+
+        while (!qCats.isEmpty()){
+            System.out.println(qCats.poll().getName());
+        }
         //endregion
 
         //region 4.3
