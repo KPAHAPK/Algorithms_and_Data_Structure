@@ -1,3 +1,4 @@
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -158,6 +159,34 @@ public class MainClass {
         //region 4.3
         System.out.println("------------------4.3------------------------");
 
+        Deque<Cat> dqCats = new LinkedList<>();
+
+        t1 = System.nanoTime();
+        dqCats.add(cat1);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to add: %.2f\n\n", (float) dt);
+        dqCats.add(cat2);
+
+        t1 = System.nanoTime();
+        dqCats.offerFirst(cat3);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to offer: %.2f\n\n", (float) dt);
+        dqCats.offerLast(cat5);
+
+        t1 = System.nanoTime();
+        dqCats.remove();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to remove: %.2f\n\n", (float) dt);
+
+        t1 = System.nanoTime();
+        dqCats.removeFirst();
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("Time to removeFirst: %.2f\n\n", (float) dt);
+        dqCats.removeLast();
         //endregion
 
         //region 4.4
