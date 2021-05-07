@@ -37,10 +37,9 @@ public class MainClass {
         if (recursiveRun) {
             System.out.println("run.");
             infinity(100000000);
-        }else {
+        } else {
             System.out.println("didn't run.(recursiveRun = true to run infinity recursion).");
         }
-
 
 
         System.out.println(factorial(5));
@@ -66,13 +65,13 @@ public class MainClass {
         t1 = System.nanoTime();
         result = factorial(n);
         t2 = System.nanoTime();
-        dt = t2 -t1;
+        dt = t2 - t1;
         System.out.printf("\nRecursion time: %.2f ns\n", (float) dt);
         System.out.println(n + "! = " + result);
 
         result = 1;
         t1 = System.nanoTime();
-        for (int i = 1; i <= n; i ++){
+        for (int i = 1; i <= n; i++) {
             result *= i;
         }
         t2 = System.nanoTime();
@@ -83,7 +82,7 @@ public class MainClass {
         t1 = System.nanoTime();
         int j = 1;
         result = 1;
-        while(j <= n){
+        while (j <= n) {
             result *= j;
             j++;
         }
@@ -120,7 +119,7 @@ public class MainClass {
         System.out.println("Key index: " + result);
 
         System.out.println();
-        key = - array.length;
+        key = -array.length;
         System.out.println("Key: " + key);
         System.out.println("Key index: " + recursiveBinarySearch(array, 0, array.length - 1, key));
 
@@ -135,60 +134,102 @@ public class MainClass {
 
         //region5.6
         System.out.println("--------------------5.6---------------------");
+        int temp;
+        int randomTemp;
+        for (int i = 0; i < array.length; i++) {
+            temp = array[i];
+            randomTemp = random.nextInt(arrayLength);
+            array[i] = array[randomTemp];
+            array[randomTemp] = temp;
+        }
+
+        int[] sortedArray;
+        sortedArray = mergeSort(array);
+        System.out.println(Arrays.toString(sortedArray));
 
         //endregion
     }
 
-    public static int factorial(int n){
-        if (n == 1){
+    public static int factorial(int n) {
+        if (n == 1) {
             return 1;
         }
-        return (factorial(n-1)*n);
+        return (factorial(n - 1) * n);
     }
 
-    public static void infinity(int n){
+    public static void infinity(int n) {
         System.out.println((double) n);
         infinity(n / 5000 * 4999);
     }
 
-     public static int recursiveBinarySearch(int[] array, int lowIndex, int highIndex, int key){
-        if (lowIndex > highIndex){
+    public static int recursiveBinarySearch(int[] array, int lowIndex, int highIndex, int key) {
+        if (lowIndex > highIndex) {
             return array.length;
         }
 
-        if (key < array[lowIndex] || key > array[highIndex]){
+        if (key < array[lowIndex] || key > array[highIndex]) {
             return -1;
         }
 
-         int middleIndex = (highIndex + lowIndex) / 2;
+        int middleIndex = (highIndex + lowIndex) / 2;
 
-         if (key == array[middleIndex]){
+        if (key == array[middleIndex]) {
             return middleIndex;
-        } else if (key > array[middleIndex]){
+        } else if (key > array[middleIndex]) {
             return recursiveBinarySearch(array, middleIndex + 1, highIndex, key);
-        }else {
+        } else {
             return recursiveBinarySearch(array, lowIndex, middleIndex - 1, key);
         }
     }
 
-    public static int cyclicBinarySearch(int[] array, int key){
+    public static int cyclicBinarySearch(int[] array, int key) {
         int firstIndex = 0;
         int lastIndex = array.length - 1;
         int middle;
-        while (firstIndex <= lastIndex){
-            middle = (lastIndex + firstIndex) / 2;
+        while (firstIndex <= lastIndex) {
+            middle = lastIndex / 2;
 
-            if (array[middle] == key){
+            if (array[middle] == key) {
                 return middle;
-            }
-            else if (array[middle] > key) {
+            } else if (array[middle] > key) {
                 lastIndex = middle - 1;
-            }
-            else {
+            } else {
                 firstIndex = middle + 1;
             }
         }
         return -1;
+    }
+
+    public static int[] mergeSort(int[] arr) {
+        if (arr.length < 2) {
+            return arr;
+        }
+
+        int middleIndex = arr.length / 2;
+
+        return merge(mergeSort(Arrays.copyOfRange(arr, middleIndex, arr.length)),
+                mergeSort(Arrays.copyOfRange(arr, 0, middleIndex)));
+    }
+
+    public static int[] merge(int[] firstArray, int[] secondArray) {
+        int[] result = new int[firstArray.length + secondArray.length];
+        int firstArrayIndex = 0;
+        int secondArrayIndex = 0;
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = firstArray[firstArrayIndex] > secondArray[secondArrayIndex] ?
+                    secondArray[secondArrayIndex++] : firstArray[firstArrayIndex++];
+            if (firstArrayIndex == firstArray.length) {
+                System.arraycopy(secondArray, secondArrayIndex, result, ++i, secondArray.length - secondArrayIndex);
+                break;
+            }
+            if (secondArrayIndex == firstArray.length) {
+                System.arraycopy(firstArray, firstArrayIndex, result, ++i, firstArray.length - firstArrayIndex);
+                break;
+            }
+
+        }
+        return result;
     }
 
 
