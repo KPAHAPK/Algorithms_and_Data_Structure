@@ -92,7 +92,6 @@ class MyLinkedList<T> {
     }
 }
 
-
 public class MainClass<T> {
     T[] arrayT;
     static Random random = new Random();
