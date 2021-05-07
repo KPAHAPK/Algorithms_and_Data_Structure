@@ -97,7 +97,8 @@ public class MainClass {
         System.out.println("--------------------5.5---------------------");
         Random random = new Random();
         int[] array;
-        int arrayLength = random.ints(15, 30).findFirst().getAsInt();
+        int arrayLength = random.ints(350, 400).findFirst().getAsInt();
+//        arrayLength = 10;
         array = new int[arrayLength];
         int key = random.nextInt(arrayLength);
 
@@ -143,9 +144,25 @@ public class MainClass {
             array[randomTemp] = temp;
         }
 
+        int[] arrayCopy;
+        arrayCopy = Arrays.copyOf(array, arrayLength);
         int[] sortedArray;
+        t1 = System.nanoTime();
         sortedArray = mergeSort(array);
-        System.out.println(Arrays.toString(sortedArray));
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.println("Non-sorted array: " + Arrays.toString(array));
+        System.out.println("Sorted array: " + Arrays.toString(sortedArray));
+        System.out.printf("MergeSort time: %.2f ns\n\n", (float) dt);
+
+
+        t1 = System.nanoTime();
+        Arrays.sort(arrayCopy);
+        t2 = System.nanoTime();
+        dt = t2 - t1;
+        System.out.println("Non-sorted array: " + Arrays.toString(array));
+        System.out.println("Sorted array: " + Arrays.toString(arrayCopy));
+        System.out.printf("QuickSort time: %.2f ns\n", (float) dt);
 
         //endregion
     }
@@ -205,10 +222,10 @@ public class MainClass {
             return arr;
         }
 
-        int middleIndex = arr.length / 2;
+        int middle = arr.length / 2;
 
-        return merge(mergeSort(Arrays.copyOfRange(arr, middleIndex, arr.length)),
-                mergeSort(Arrays.copyOfRange(arr, 0, middleIndex)));
+        return merge(mergeSort(Arrays.copyOfRange(arr, 0, middle)),
+                mergeSort(Arrays.copyOfRange(arr, middle, arr.length)));
     }
 
     public static int[] merge(int[] firstArray, int[] secondArray) {
@@ -217,13 +234,12 @@ public class MainClass {
         int secondArrayIndex = 0;
 
         for (int i = 0; i < result.length; i++) {
-            result[i] = firstArray[firstArrayIndex] > secondArray[secondArrayIndex] ?
-                    secondArray[secondArrayIndex++] : firstArray[firstArrayIndex++];
+                result[i] = firstArray[firstArrayIndex] < secondArray[secondArrayIndex] ? firstArray[firstArrayIndex++] : secondArray[secondArrayIndex++];
             if (firstArrayIndex == firstArray.length) {
                 System.arraycopy(secondArray, secondArrayIndex, result, ++i, secondArray.length - secondArrayIndex);
                 break;
             }
-            if (secondArrayIndex == firstArray.length) {
+            if (secondArrayIndex == secondArray.length) {
                 System.arraycopy(firstArray, firstArrayIndex, result, ++i, firstArray.length - firstArrayIndex);
                 break;
             }

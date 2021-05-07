@@ -90,6 +90,7 @@ public class MainClass {
         System.out.println("Binary search time: " + t5End);
         System.out.println();
         //endregion
+
         //region 2.3
         System.out.println("--------2.3--------");
         System.out.println("Array: " + Arrays.toString(arrayCopy));
@@ -100,6 +101,7 @@ public class MainClass {
         System.out.println("Qsort time: " + t6End  + " нс");
         System.out.println();
         //endregion
+
         //region 2.4
         System.out.println("--------2.4--------");
         int[] bubbleSortResult = Arrays.copyOf(array, arrayLength);
