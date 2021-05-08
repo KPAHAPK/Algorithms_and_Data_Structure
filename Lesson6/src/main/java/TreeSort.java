@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 /*
@@ -260,7 +261,11 @@ class Tree {
 }
 
 
-public class MainClass {
+public class TreeSort {
+    static long t1;
+    static long t2;
+    static long dt;
+
     public static void main(String[] args) {
         Tree myTree = new Tree();
 
@@ -272,15 +277,34 @@ public class MainClass {
         myTree.insert(new Person(8, "Kuzya", 1));
         myTree.insert(new Person(1, "Boris", 4));
 
+        t1 = System.nanoTime();
         myTree.max().display();
+        t2 =System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("\nTime to find max: %.2f ns\n", (float) dt);
+
+        t1 = System.nanoTime();
         myTree.min().display();
+        t2 =System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("\nTime to find min: %.2f ns\n", (float) dt);
 
+        t1 = System.nanoTime();
         myTree.find(2).display();
+        t2 =System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("\nTime to find element: %.2f ns\n", (float) dt);
 
-        myTree.delete(2);
+        t1 = System.nanoTime();
         myTree.delete(3);
+        t2 =System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("\nTime to delete element: %.2f ns\n", (float) dt);
 
+        t1 = System.nanoTime();
         myTree.display();
-
+        t2 =System.nanoTime();
+        dt = t2 - t1;
+        System.out.printf("\nTime to display: %.2f ns\n", (float) dt);
     }
 }
