@@ -57,7 +57,7 @@ class Graph2 {
         vertexList[f].wasVisited = true;
         for (int i = 0; i < size; i++) {
             int v = getAdjUnvisitedVertex(f);
-            if (!vertexList[i].wasVisited && v != -1) {
+            if (!vertexList[i].wasVisited && v!=-1 && i==v) {
                 fullDisplayVertex(f, v);
                 dfs2(i);
             }
@@ -142,8 +142,9 @@ public class RecursiveGraph {
         System.out.println("----------");
 
         graph.dfs2(0);
+        System.out.println();
         graph.bfs();
+        System.out.println();
         graph.bfs2(0);
-
     }
 }
