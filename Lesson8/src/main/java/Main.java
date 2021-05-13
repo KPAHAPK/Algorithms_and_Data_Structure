@@ -28,12 +28,16 @@ class HashTable{
     public int hashFunc(int key){
         return key % arrSize;
     }
+    public int hashFuncDouble(int key){
+        return 5 - key % 5;
+    }
 
     public void insert(Item item){
         int key = item.getKey();
         int hashVal = hashFunc(key);
+        int step = hashFuncDouble(key);
         while (hashArr[hashVal] != null && hashArr[hashVal].getKey() != -1){
-            ++hashVal;
+            hashVal += step;
             hashVal %= arrSize;
         }
         hashArr[hashVal] = item;
@@ -41,13 +45,14 @@ class HashTable{
 
     public Item delete(int key){
      int hashVal = hashFunc(key);
+     int step = hashFuncDouble(key);
      while (hashArr[hashVal] != null){
          if (hashArr[hashVal].getKey() == key){
              Item temp = hashArr[hashVal];
              hashArr[hashVal] = nonItem;
              return temp;
          }
-         ++hashVal;
+         hashVal += step;
          hashVal %= arrSize;
      }
      return null;
@@ -55,11 +60,12 @@ class HashTable{
 
     public Item find(int key){
         int hashVal = hashFunc(key);
+        int step = hashFuncDouble(key);
         while (hashArr[hashVal] != null){
             if (hashArr[hashVal].getKey() == key) {
                 return hashArr[hashVal];
             }
-            ++hashVal;
+            hashVal += step;
             hashVal %= arrSize;
         }
         return null;
@@ -74,7 +80,22 @@ class HashTable{
             }
         }
     }
+    private int getPrime(int min){
+        for(int i = min +1; true; i++){
+            if (isPrime(i)){
+                return i;
+            }
+        }
+    }
 
+    private boolean isPrime(int n){
+        for (int j = 2; j*j <= n; j++){
+            if (n % j == 0){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
 
@@ -104,7 +125,13 @@ public class Main {
         hashTable.display();
         System.out.println("*******************");
         System.out.println(hashTable.find(111).getKey());
-    }
+
+        int[] array = new int[10];
+        for (int z : array)
+            if (z  == 0)
+                System.out.println("*");
+
+        }
 
 
 
